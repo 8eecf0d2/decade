@@ -1,4 +1,7 @@
 # Decade
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/decade.svg)](https://greenkeeper.io/)
+
 Dead simple HTTP/s Server with zero dependencies written with Typescript in about 150 lines.
 
 This library only supports two Http verbs, `GET` and `POST`, it encourages users to work with built in Node modules.
