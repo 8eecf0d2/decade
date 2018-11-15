@@ -39,14 +39,14 @@ export class Router {
 
     if (result) {
       result.headers = {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
         ...(result.headers || {}),
       };
       for (const header of Object.keys(result.headers)) {
         response.setHeader(header, result.headers[header]);
       }
       response.statusCode = result.status;
-      response.end(JSON.stringify(result.body));
+      response.end(result.headers["content-type"] === "application/json" ? JSON.stringify(result.body) : result.body);
     }
   }
 }
