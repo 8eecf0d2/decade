@@ -2,7 +2,7 @@
 
 [![Travis CI badge](https://travis-ci.org/8eecf0d2/decade.svg?branch=develop)](https://travis-ci.org/8eecf0d2/decade)
 [![Codeclimate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/8eecf0d2/decade.svg)](https://codeclimate.com/github/8eecf0d2/decade)
-[![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/decade.svg)](https://greenkeeper.io/)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=8eecf0d2/decade)](https://dependabot.com)
 
 Dead simple HTTP/s Server with zero dependencies written with Typescript in about 150 lines.
 
