@@ -12,12 +12,12 @@ export class Router {
     }));
   }
 
-  public handle(request: http.IncomingMessage, response: http.ServerResponse) {
+  public async handle(request: http.IncomingMessage, response: http.ServerResponse) {
     const url = new URL(`http://localhost${request.url}`);
     for (const route of this.routes) {
       const match = route.path.exec(url.pathname);
       if (match && route.method === request.method) {
-        return this.process(route, request, response);
+        await this.process(route, request, response);
       }
     }
     response.statusCode = 404;
