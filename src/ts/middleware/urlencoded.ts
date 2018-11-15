@@ -4,7 +4,7 @@ import { Deferred } from "../util";
 import * as querystring from "querystring";
 
 export const urlencoded: Router.Route.Handler = async (request, response) => {
-  if(request.headers["content-type"] !== "application/x-www-form-urlencoded") {
+  if (request.headers["content-type"] !== "application/x-www-form-urlencoded") {
 
     return;
   }
@@ -13,7 +13,7 @@ export const urlencoded: Router.Route.Handler = async (request, response) => {
 
   let chunks = "";
   request.on("data", (chunk) => chunks += chunk);
-  request.on('end', () => {
+  request.on("end", () => {
     try {
       request.body = querystring.parse(chunks);
     } catch (error) {
