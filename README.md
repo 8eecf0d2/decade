@@ -1,6 +1,6 @@
 # Decade
 
-[![Travis CI badge](https://travis-ci.org/8eecf0d2/decade.svg?branch=master)](https://travis-ci.org/8eecf0d2/decade)
+[![Travis CI badge](https://travis-ci.org/8eecf0d2/decade.svg?branch=develop)](https://travis-ci.org/8eecf0d2/decade)
 [![Codeclimate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/8eecf0d2/decade.svg)](https://codeclimate.com/github/8eecf0d2/decade)
 [![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/decade.svg)](https://greenkeeper.io/)
 
