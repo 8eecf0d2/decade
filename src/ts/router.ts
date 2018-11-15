@@ -20,8 +20,6 @@ export class Router {
         await this.process(route, request, response);
       }
     }
-    response.statusCode = 404;
-    response.end();
   }
 
   private async process(route: Router.Route, request: Router.Route.Request, response: Router.Route.Response) {
