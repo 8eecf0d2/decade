@@ -25,7 +25,7 @@ export class Router {
   }
 
   private async process(route: Router.Route, request: Router.Route.Request, response: Router.Route.Response) {
-    let result: Router.Route.Payload | void;
+    let result: void | Router.Route.Payload;
     try {
       for (const handler of route.handler) {
         result = await handler(request, response);
@@ -36,6 +36,7 @@ export class Router {
         body: "Internal Error",
       };
     }
+
     if (result) {
       result.headers = {
         "Content-Type": "application/json",

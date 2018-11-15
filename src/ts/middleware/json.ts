@@ -7,7 +7,7 @@ export const json: Router.Route.Handler = async (request, response) => {
     return;
   }
 
-  const deferred = new Deferred();
+  const deferred = new Deferred<void>();
 
   let chunks = "";
   request.on("data", (chunk) => chunks += chunk);
@@ -20,5 +20,5 @@ export const json: Router.Route.Handler = async (request, response) => {
     return deferred.resolve();
   });
 
-  await deferred.promise;
+  return deferred.promise;
 };
