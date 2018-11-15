@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc --project ./tsconfig.json",
     "watch": "tsc --project ./tsconfig.json --watch",
+    "pretest": "yarn run build",
     "test": "ts-mocha --project ./test/tsconfig.json test/**/*.spec.ts",
     "lint": "tslint -c tslint.json src/ts/**/*.ts test/ts/**/*.ts"
   },
