@@ -1,5 +1,4 @@
 import * as http from "http";
-import * as https from "https";
 import { URL } from "url";
 
 export class Router {
