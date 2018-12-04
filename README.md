@@ -31,7 +31,7 @@ const server = new Server({
 });
 ```
 
-For simple `JSON` responses you can return a `Router.Route.Response` object from a handler which will be parsed and sent to the client.
+For simple `JSON` responses you can return a `Router.Route.Payload` object from a handler which will be parsed and sent to the client.
 ```ts
 import { Router } from "decade";
 
@@ -42,6 +42,9 @@ export const simpleRoute: Router.Route = {
     async () => {
       return {
         status: 200,
+        headers: {
+          "Foo-Bar": "Baz-Qak",
+        },
         body: {
           foo: "bar",
         },
@@ -51,7 +54,7 @@ export const simpleRoute: Router.Route = {
 }
 ```
 
-If you need more control, you can craft your own response and simply return `void` from the handler - handlers are called in order so you can drop in middleware wherever suits.
+If you need more control, you can craft your own response and simply return `void` from the handler - handlers are called in-order so you can drop in middleware wherever suits.
 ```ts
 import { Router } from "decade";
 import { fooMiddleware } from "./middleware"
