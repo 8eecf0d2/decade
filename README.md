@@ -1,12 +1,12 @@
-# Decade
+# Decade ☄️
 
 [![Travis CI badge](https://travis-ci.org/8eecf0d2/decade.svg?branch=develop)](https://travis-ci.org/8eecf0d2/decade)
 [![Codeclimate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/8eecf0d2/decade.svg)](https://codeclimate.com/github/8eecf0d2/decade)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=8eecf0d2/decade)](https://dependabot.com)
 
-Dead simple HTTP/s Server with zero dependencies written with Typescript in about 150 lines.
+Dead simple HTTP/s Server Wrapper with zero dependencies written with Typescript in about 200 lines.
 
-This library only supports two Http verbs, `GET` and `POST`, it encourages users to work with built in Node modules.
+This library encourages users to work with built in Node modules and only supports two Http verbs, `GET` and `POST`, because the other ones are trash.
 
 ### Install
 Install with yarn.
