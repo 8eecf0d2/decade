@@ -6,7 +6,7 @@ import * as middleware from "./middleware";
 
 export class Server {
 
-  static Middleware = middleware;
+  public static Middleware = middleware;
 
   constructor(
     private options: Server.Options,
