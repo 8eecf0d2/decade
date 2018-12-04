@@ -1,0 +1,25 @@
+{
+  "name": "decade",
+  "version": "0.1.1",
+  "description": "Dead simple HTTP/s Server",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/8eecf0d2/honker.git",
+  "author": "8eecf0d2 <8eecf0d23d248b0e6223b8a10ddbf1@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc --project ./tsconfig.json",
+    "watch": "tsc --project ./tsconfig.json --watch",
+    "lint": "tslint -c tslint.json src/ts/**/*.ts test/ts/**/*.ts",
+    "test": "yarn run lint && yarn run build && ts-mocha --project ./test/tsconfig.json test/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.12",
+    "mocha": "^5.2.0",
+    "ts-mocha": "^2.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.1"
+  },
+  "dependencies": {}
+}

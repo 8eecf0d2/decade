@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "lib": [ "ES2015", "ES2017" ]
+  },
+  "include": [ "ts/**/*.ts" ],
+  "exclude": [ "node_modules" ]
+}
