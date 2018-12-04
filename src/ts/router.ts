@@ -25,7 +25,7 @@ export class Router {
     let result: void | Router.Route.Payload;
     try {
       for (const handler of route.handler) {
-        result = await handler(request, response);
+        result = await handler(request, response, result);
       }
     } catch (error) {
       result = {
@@ -60,10 +60,11 @@ export namespace Router {
       body: any;
       status: number;
     }
-    export type Handler = (
-      request: Router.Route.Request,
+    export type Handler<RequestType = Router.Route.Request, PayloadType = Router.Route.Payload> = (
+      request: RequestType,
       response: Router.Route.Response,
-    ) => Promise<void> | Promise<Router.Route.Payload>;
+      previous: void | PayloadType,
+    ) => Promise<void | PayloadType>;
   }
   export interface Route {
     path: RegExp;
