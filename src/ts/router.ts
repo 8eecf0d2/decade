@@ -1,6 +1,8 @@
 import * as http from "http";
 import { URL } from "url";
 
+import { Logger } from "./util";
+
 export class Router {
   constructor(
     private routes: Router.Route[],
