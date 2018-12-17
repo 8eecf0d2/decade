@@ -11,7 +11,7 @@ export class Deferred<T> {
 }
 
 export class Logger {
-  static active = () => !(process.env.SILENT === "true");
+  static active = () => (process.env.DEBUG);
 
   public static info (...args: any[]): void {
     if(Logger.active()) {
