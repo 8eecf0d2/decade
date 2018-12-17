@@ -1,6 +1,7 @@
 import * as http from "http";
 import * as https from "https";
 
+import { Logger } from "./util";
 import { Router } from "./router";
 import * as middleware from "./middleware";
 
@@ -8,9 +9,14 @@ export class Server {
 
   public static Middleware = middleware;
 
+  private servers: Server.Servers = {};
+  private router: Router;
+
   constructor(
     private options: Server.Options,
   ) {
+    Logger.info(`...`);
+
     this.router = new Router(options.routes);
 
     if (options.http) {
@@ -20,24 +26,22 @@ export class Server {
       this.https();
     }
   }
-  private servers: Server.Servers = {};
-  private router: Router;
 
   public start(): void {
     if (this.servers.http) {
-      this.servers.http.listen(this.options.http);
+      this.servers.http.listen(this.options.http, () => Logger.good(`[http]:  http://localhost:${this.options.http}`));
     }
     if (this.servers.https) {
-      this.servers.https.listen(this.options.https);
+      this.servers.https.listen(this.options.https, () => Logger.good(`[https]: https://localhost:${this.options.https}`));
     }
   }
 
   public stop(): void {
     if (this.servers.http) {
-      this.servers.http.close();
+      this.servers.http.close(() => Logger.good(`http : stopped`));
     }
     if (this.servers.https) {
-      this.servers.https.close();
+      this.servers.https.close(() => Logger.good(`https: stopped`));
     }
   }
 
@@ -50,9 +54,20 @@ export class Server {
     this.servers.https = https.createServer(this.options.options);
     this.servers.https.on("request", this.router.handle.bind(this.router));
   }
+
+  public plugin (plugin: Server.Plugin): void {
+    Logger.good(`plugin: ${plugin.name}`);
+    for (const route of plugin.routes) {
+      this.router.register(route);
+    }
+  }
 }
 
 export namespace Server {
+  export interface Plugin {
+    name: string;
+    routes: Router.Route[];
+  }
   export interface Options {
     routes: Router.Route[];
     http?: number;
