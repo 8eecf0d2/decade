@@ -4,13 +4,19 @@ import { URL } from "url";
 import { Logger } from "./util";
 
 export class Router {
+  private routes: Router.Route[] = [];
+
   constructor(
-    private routes: Router.Route[],
+    routes: Router.Route[],
   ) {
-    this.routes = this.routes.map((route) => ({
-      ...route,
-      path: route.path,
-    }));
+    for (const route of routes) {
+      this.register(route);
+    }
+  }
+
+  public register (route: Router.Route): void {
+    Logger.info(`[route]: ${route.path}`);
+    this.routes.push(route);
   }
 
   public async handle(request: http.IncomingMessage, response: http.ServerResponse) {
