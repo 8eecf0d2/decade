@@ -1,5 +1,5 @@
 import { Router } from "../";
-import { Deferred } from "../util";
+import { Deferred } from "../../../util";
 
 import * as querystring from "querystring";
 

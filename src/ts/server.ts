@@ -2,23 +2,15 @@ import * as http from "http";
 import * as https from "https";
 
 import { Logger } from "./util";
-import { Router } from "./router";
-import * as middleware from "./middleware";
 
 export class Server {
-
-  public static Middleware = middleware;
-
   private servers: Server.Servers = {};
-  private router: Router;
   private events: { [key: string]: Server.Event.Handler[] } = {};
 
   constructor(
     private options: Server.Options,
   ) {
-    Logger.info(`...`);
-
-    this.router = new Router(options.routes);
+    Logger.info(`initializing`);
 
     if (options.http) {
       this.http();
@@ -60,23 +52,17 @@ export class Server {
 
   private http(): void {
     this.servers.http = http.createServer();
-    this.servers.http.on("request", (request, response) => {
-      this.emit("request", { request, response });
-      this.router.handle(request, response);
-    });
+    this.servers.http.on("request", (request, response) => this.emit("request", { request, response }));
   }
 
   private https(): void {
     this.servers.https = https.createServer(this.options.options);
-    this.servers.https.on("request", (request, response) => {
-      this.emit("request", { request, response });
-      this.router.handle(request, response);
-    });
+    this.servers.https.on("request", (request, response) => this.emit("request", { request, response }));
   }
 
   public async plugin(plugin: Server.Plugin): Promise<void> {
-    Logger.good(`[plugin]: "${plugin.name}"`);
-    const instance = new plugin(this);
+    Logger.good(`[plugin]: "${plugin.constructor.name}"`);
+    await plugin.register(this);
   }
 
   public on(event: Server.Event.Type, handler: Server.Event.Handler): void {
@@ -100,14 +86,13 @@ export class Server {
 
 export namespace Server {
   export interface Plugin {
-    new(server: Server): any;
+    register: (server: Server) => Promise<void>;
   }
   export namespace Event {
     export type Type = "start" | "stop" | "request";
     export type Handler = (...args: any[]) => any;
   }
   export interface Options {
-    routes: Router.Route[];
     http?: number;
     https?: number;
     options?: https.ServerOptions;
