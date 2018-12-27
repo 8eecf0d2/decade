@@ -18,7 +18,6 @@ yarn add decade
 Create a `http` and `https` server.
 ```ts
 import { Server } from "decade";
-import * as routes from "./routes";
 
 const server = new Server({
   http: 3080,
@@ -27,8 +26,48 @@ const server = new Server({
     key: "...",
     cert: "...",
   },
-  routes: Object.values(routes),
 });
+```
+
+### Plugin
+Decade provides a simple **Plugin** system, a plugin should be an _something_ with a `register` method which will receive the **Server** instance, from there you can listen for and emit events.
+
+```ts
+import { Server } from "decade";
+export class MyPlugin implements Server.Plugin {
+  ...
+  async register(server: Server): Promise<void> {
+    this.server = server;
+    server.on("request", this.doSomething.bind(this));
+  }
+
+  async someOtherMethod() {
+    this.server.emit("customevent", "foo");
+  }
+}
+```
+
+To use a plugin, use the `Server.plugin` method.
+```ts
+import { Server } from "decade";
+import { FooPlugin } from "decade-foo-plugin";
+
+const server = new Server({...});
+server.plugin(new FooPlugin("bar"));
+```
+
+### Router
+There's a built in **Router** plugin available for import which can be initialized with an array of `Router.Route` objects.
+
+```ts
+import { Server, Router } from "decade";
+import * as routes from "./routes";
+
+const server = new Server({...})
+
+const router = new Router(Object.values(routes));
+
+server.plugin(router);
 ```
 
 For simple `JSON` responses you can return a `Router.Route.Payload` object from a handler which will be parsed and sent to the client.
