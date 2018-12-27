@@ -30,24 +30,26 @@ const server = new Server({
 ```
 
 ### Plugin
-Decade provides a simple **Plugin** system, a plugin should be an _something_ with a `register` method which will receive the **Server** instance, from there you can listen for and emit events.
+Decade provides a simple **Plugin** system, a plugin should be _something_ with a `register` method which will receive the **Server** instance and a **Logger** instance, from there you can listen for and emit events.
 
 ```ts
-import { Server } from "decade";
+import { Server, Logger } from "decade";
 export class MyPlugin implements Server.Plugin {
   ...
-  async register(server: Server): Promise<void> {
+  async register(server: Server, logger: Logger): Promise<void> {
     this.server = server;
+    this.logger = logger;
     server.on("request", this.doSomething.bind(this));
   }
 
   async someOtherMethod() {
+    this.logger.info("something happened!");
     this.server.emit("customevent", "foo");
   }
 }
 ```
 
-To use a plugin, use the `Server.plugin` method.
+To use a plugin, pass an it into the `Server.plugin` method.
 ```ts
 import { Server } from "decade";
 import { FooPlugin } from "decade-foo-plugin";
