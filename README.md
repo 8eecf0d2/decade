@@ -6,7 +6,7 @@
 
 Dead simple HTTP/s Server Wrapper with zero dependencies written with Typescript in about 200 lines.
 
-This library encourages users to work with built in Node modules and only supports two Http verbs, `GET` and `POST`, because the other ones are trash.
+This library encourages users to work with built in Node modules and the built in Router only supports two Http verbs, `GET` and `POST`, because the other ones are trash.
 
 ### Install
 Install with yarn.
@@ -49,7 +49,7 @@ export class MyPlugin implements Server.Plugin {
 }
 ```
 
-To use a plugin, pass an it into the `Server.plugin` method.
+To use a plugin, pass it into the `Server.plugin` method.
 ```ts
 import { Server } from "decade";
 import { FooPlugin } from "decade-foo-plugin";
