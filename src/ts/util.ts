@@ -11,23 +11,33 @@ export class Deferred<T> {
 }
 
 export class Logger {
+  constructor(
+    private service: string,
+  ) {}
+
   static active = () => (process.env.DEBUG);
 
-  public static info (...args: any[]): void {
+  public info (...args: any[]): void {
     if(Logger.active()) {
-      console.log(Logger.colorFgWhite("[decade]"), ...args);
+      console.log(Logger.colorFgWhite(`[${this.service}]`), ...args);
     }
   }
 
-  public static good (...args: any[]): void {
+  public detail (...args: any[]): void {
     if(Logger.active()) {
-      console.log(Logger.colorFgGreen("[decade]"), ...args);
+      console.log(Logger.colorFgYellow(`[${this.service}]`), ...args);
     }
   }
 
-  public static error (...args: any[]): void {
+  public good (...args: any[]): void {
     if(Logger.active()) {
-      console.error(Logger.colorFgRed("[decade]"), ...args);
+      console.log(Logger.colorFgGreen(`[${this.service}]`), ...args);
+    }
+  }
+
+  public error (...args: any[]): void {
+    if(Logger.active()) {
+      console.error(Logger.colorFgRed(`[${this.service}]`), ...args);
     }
   }
 
