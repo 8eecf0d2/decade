@@ -4,7 +4,7 @@
   "description": "Dead simple HTTP/s Server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/8eecf0d2/honker.git",
+  "repository": "https://github.com/8eecf0d2/decade.git",
   "author": "8eecf0d2 <8eecf0d23d248b0e6223b8a10ddbf1@gmail.com>",
   "license": "ISC",
   "scripts": {
