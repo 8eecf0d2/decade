@@ -1,16 +1,17 @@
 import * as http from "http";
 import * as https from "https";
 
-import { Logger } from "./util";
+import { Logger, Deferred } from "./util";
 
 export class Server {
   private servers: Server.Servers = {};
   private events: { [key: string]: Server.Event.Handler[] } = {};
+  private logger: Logger = new Logger("decade");
 
   constructor(
     private options: Server.Options,
   ) {
-    Logger.info(`initializing`);
+    this.logger.info(`initializing`);
 
     if (options.http) {
       this.http();
@@ -20,32 +21,42 @@ export class Server {
     }
   }
 
-  public start(): void {
+  public async start(): Promise<void> {
+    const promises = [ new Deferred(), new Deferred() ];
+
     if (this.servers.http) {
       this.servers.http.listen(this.options.http, () => {
         this.emit("start", "http");
-        Logger.good(`[http]: http://localhost:${this.options.http}`);
+        promises[0].resolve();
+        this.logger.good(`[http]: http://localhost:${this.options.http}`);
       });
+    } else {
+      promises[0].resolve();
     }
     if (this.servers.https) {
       this.servers.https.listen(this.options.https, () => {
         this.emit("start", "https");
-        Logger.good(`[https]: https://localhost:${this.options.https}`);
+        promises[1].resolve();
+        this.logger.good(`[https]: https://localhost:${this.options.https}`);
       });
+    } else {
+      promises[1].resolve();
     }
+
+    await Promise.all(promises);
   }
 
   public stop(): void {
     if (this.servers.http) {
       this.servers.http.close(() => {
         this.emit("stop", "http");
-        Logger.good(`[http]: stopped`);
+        this.logger.good(`[http]: stopped`);
       });
     }
     if (this.servers.https) {
       this.servers.https.close(() => {
         this.emit("stop", "https");
-        Logger.good(`[https]: stopped`);
+        this.logger.good(`[https]: stopped`);
       });
     }
   }
@@ -61,8 +72,8 @@ export class Server {
   }
 
   public async plugin(plugin: Server.Plugin): Promise<void> {
-    Logger.good(`[plugin]: "${plugin.constructor.name}"`);
-    await plugin.register(this);
+    this.logger.good(`[plugin]: <${plugin.constructor.name.toLowerCase()}>`);
+    await plugin.register(this, new Logger(plugin.constructor.name.toLowerCase()));
   }
 
   public on(event: Server.Event.Type, handler: Server.Event.Handler): void {
@@ -86,7 +97,7 @@ export class Server {
 
 export namespace Server {
   export interface Plugin {
-    register: (server: Server) => Promise<void>;
+    register: (server: Server, logger: Logger) => Promise<void>;
   }
   export namespace Event {
     export type Type = "start" | "stop" | "request";
