@@ -10,30 +10,32 @@ export class Router implements Server.Plugin {
   public static middleware = middleware;
   private routes: Router.Route[] = [];
   private server: Server;
+  private logger: Logger;
 
-  constructor(
-    routes: Router.Route[],
-  ) {
-    for(const route of routes) {
-      this.route(route);
-    }
-  }
-
-  public async register (server: Server): Promise<void> {
+  public async register (server: Server, logger: Logger): Promise<void> {
     this.server = server;
+    this.logger = logger;
     this.server.on("request", this.handle.bind(this));
   }
 
-  public route (route: Router.Route): void {
-    Logger.info(`[route]: ${route.path}`);
-    this.routes.push(route);
+  public route (routes: Router.Route[]): void {
+    routes = Array.isArray(routes) ? routes : [routes];
+
+    for(const route of routes) {
+      this.logger.info(`[route]: ${route.path}`);
+      this.routes.push(route);
+    }
   }
 
   private async handle(options: Router.HandleOptions) {
+    const tag = new Date().getTime().toString(16);
+    this.logger.detail(`[${tag}]: ${options.request.url}`);
+
     const url = new URL(`http://localhost${options.request.url}`);
     for (const route of this.routes) {
       const match = route.path.exec(url.pathname);
       if (match && route.method === options.request.method) {
+        this.logger.info(`[${tag}]: ${route.path}`);
         await this.process(route, options.request, options.response);
       }
     }
