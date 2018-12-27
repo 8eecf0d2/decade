@@ -1,5 +1,5 @@
 import { Router } from "../";
-import { Deferred } from "../util";
+import { Deferred } from "../../../util";
 
 export const json: Router.Route.Handler = async (request, response) => {
   if (request.method !== "POST" || request.headers["content-type"] !== "application/json") {

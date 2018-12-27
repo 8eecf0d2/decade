@@ -8,7 +8,6 @@ mocha.describe("Server", () => {
     mocha.it("should start and stop", async () => {
       const server = new Server({
         http: 3000,
-        routes: [],
       });
 
       server.start();
