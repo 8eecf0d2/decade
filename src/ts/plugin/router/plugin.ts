@@ -12,9 +12,14 @@ export class Router implements Server.Plugin {
   private server: Server;
   private logger: Logger;
 
+  constructor(
+    private _routes: Router.Route[] = [],
+  ) {}
+
   public async register (server: Server, logger: Logger): Promise<void> {
     this.server = server;
     this.logger = logger;
+    this.route(this._routes);
     this.server.on("request", this.handle.bind(this));
   }
 
