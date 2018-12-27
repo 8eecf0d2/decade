@@ -115,6 +115,10 @@ export const detailedRoute: Router.Route = {
 }
 ```
 
+Routes resolve sequentially so if you have multiple routes which match the request URL they will all be called in the order that they were added to the Router.
+
+_A common oversight is resolving routes too early, like the proxy route above which resolves immediately. Routes should only resolve once they are finished interacting with the request and response objects._
+
 ### Middleware
 By default incoming `request` objects aren't parsed for `JSON` or `URL Encoded` payloads but you can use built in Middleware to do this.
 
