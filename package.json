@@ -14,7 +14,7 @@
     "test": "yarn run lint && yarn run build && ts-mocha --project ./test/tsconfig.json test/**/*.spec.ts"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.5",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^10.12.12",
     "mocha": "^5.2.0",
     "ts-mocha": "^2.0.0",
